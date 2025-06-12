@@ -57,4 +57,4 @@ This was actually completely random, 0x7F6E is 32622, a completely srand(); numb
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-<h2>IsoAris -REVITALIZE-</h2>
+<h3>IsoAris -REVITALIZE-</h3>
