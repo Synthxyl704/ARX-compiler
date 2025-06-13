@@ -15,18 +15,24 @@ enum tokenType {
   variable, 
 };
 
-
+typedef struct {
   enum tokenType datatype;
   char lexicalBuffer[MAX_BUFFER_SIZE];
 } token;
 
 token tokenArray[MAX_TOKENS_USAGE];
-int tokenCount = 0;
 
 char alphaDetectionBuffer[MAX_BUFFER_SIZE] = {0};
+char linearOneLineSize[0x400];      // 1024
+
 int bufferIndex = 0;
+int tokenCount = 0;
+int lineNumber = 1;
 
 void finalizeAlphaToken() {
+
+  /*
+   
   if (bufferIndex > 0 && tokenCount < MAX_TOKENS_USAGE) {
     alphaDetectionBuffer[bufferIndex] = '\0'; 
     tokenArray[tokenCount].datatype = strcmp(alphaDetectionBuffer, "_ret") == 0 ? _return 
@@ -36,13 +42,35 @@ void finalizeAlphaToken() {
       tokenArray[tokenCount].datatype = isdigit(alphaDetectionBuffer[bufferIndex - 1]) ? intLiteral : variable;
     } 
 
-    strcpy(tokenArray[tokenCount].lexicalBuffer, alphaDetectionBuffer);        // copy finalized token to alphaBuffer
-    tokenCount += 1;
+    */
 
-    bufferIndex = 0;              
-    memset(alphaDetectionBuffer, 0, sizeof(alphaDetectionBuffer));             // reset the buffer back -- memset(where, how_much, sizeof());
-  }
+if (bufferIndex > 0 && tokenCount < MAX_TOKENS_USAGE) {
+    alphaDetectionBuffer[bufferIndex] = '\0';
+    if (strcmp(alphaDetectionBuffer, "_ret") == 0) {
+        tokenArray[tokenCount].datatype = _return;
+    } else if(strstr(alphaDetectionBuffer, "ret") != NULL) {
+        // tokenArray[tokenCount].datatype = variable;
+        fprintf(stderr, "\nstd:syntax:error::[TC%d/L%d]::[%s]:::[%s]\n", tokenCount, lineNumber, alphaDetectionBuffer, "_ret");
+    } else {
+        tokenArray[tokenCount].datatype = variable;
+    }
 }
+
+  else if (bufferIndex > 0 && alphaDetectionBuffer[bufferIndex - 1] != ' ' && (!isspace(alphaDetectionBuffer[bufferIndex - 1]))) {
+    if (isdigit(alphaDetectionBuffer[bufferIndex - 1])) {
+      tokenArray[tokenCount].datatype = intLiteral;
+    } else {
+      tokenArray[tokenCount].datatype = variable;                              // note to self: cannot rewrite [else if] statements after [else] is already written (wdift)
+    }
+}
+
+  strcpy(tokenArray[tokenCount].lexicalBuffer, alphaDetectionBuffer);          // copy finalized token to alphaBuffer for (a) finalized reading
+  tokenCount += 1;
+
+  bufferIndex = 0;              
+  memset(alphaDetectionBuffer, 0, sizeof(alphaDetectionBuffer));               // reset the buffer back -- memset(where, how_much, sizeof());
+}
+
 
 void tokenize(char charFromTheFile) {
   if (isspace(charFromTheFile)) {
@@ -62,7 +90,7 @@ void tokenize(char charFromTheFile) {
         alphaDetectionBuffer[bufferIndex += 1] = charFromTheFile; 
       }
 
-  // ---------------------------------------------------------------- */
+  // ---------------------------------------------------------------- */ 
   
   else if(isdigit(charFromTheFile)) {
     alphaDetectionBuffer[bufferIndex] = charFromTheFile;
@@ -96,7 +124,14 @@ int main(int argc, char **argv) {
   while ((charFromFile = fgetc(fileToRead)) != EOF) {          
     tokenize(charFromFile);
     charNumCounter += 1;
+    if (charFromFile == '\n') {
+      lineNumber += 1;
+    }
   }
+
+  /* temporary parser confirmation */
+
+  printf("\n0 - return\n1 - integer literal\n2 - semicolon\n3 - variable\n\n");
 
   for (int inc = 0; inc < tokenCount; inc += 1) {
     printf("token [%d]: type = [%d], value = [%s]\n", inc, tokenArray[inc].datatype, tokenArray[inc].lexicalBuffer);
