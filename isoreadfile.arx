@@ -1,2 +1,3 @@
-int varX64;
-_ret 69;
+int varX = 69;
+int varY = varX * 420;
+_ret 47;
