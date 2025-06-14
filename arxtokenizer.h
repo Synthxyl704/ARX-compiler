@@ -1,168 +1,48 @@
-#include "tokenizer.h"
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
 
-// need to know when to extern them or else its gonna break again
-token tokenArray[MAX_TOKENS_USAGE];
-char alphaDetectionBuffer[MAX_BUFFER_SIZE] = {0};
-char linearOneLineSize[0x400];      // 1024
-int bufferIndex = 0;
-int tokenCount = 0;
-int lineNumber = 1;
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <ctype.h>
+#include <stdbool.h>
+#include <string.h>
 
-void finalizeAlphaToken() {
+#define MAX_TOKENS_USAGE 0x7F6E
+#define MAX_BUFFER_SIZE 1024
 
-  /*
-   
-  if (bufferIndex > 0 && tokenCount < MAX_TOKENS_USAGE) {
-    alphaDetectionBuffer[bufferIndex] = '\0'; 
-    tokenArray[tokenCount].datatype = strcmp(alphaDetectionBuffer, "_ret") == 0 ? _return 
-                                                                                : variable;
+enum tokenType {
+  _return,         // 0
+  intLiteral,      // 1
+  semicolon,       // 2
+  variable,        // 3
+  plus,            // 4
+  multiply,        // 5
+  minus,           // 6
+  modulo,          // 7
+  divide,          // 8
+  assignment       // 9
+};
 
-    if (alphaDetectionBuffer[bufferIndex - 1] != isspace(alphaDetectionBuffer[bufferIndex - 1])) { 
-      tokenArray[tokenCount].datatype = isdigit(alphaDetectionBuffer[bufferIndex - 1]) ? intLiteral : variable;
-    } 
+typedef struct {
+  enum tokenType datatype;
+  char lexicalBuffer[MAX_BUFFER_SIZE];
+} token;
 
-    */
+// extern em
+extern token tokenArray[MAX_TOKENS_USAGE];
 
-  if (bufferIndex > 0 && tokenCount < MAX_TOKENS_USAGE) {
-    alphaDetectionBuffer[bufferIndex] = '\0';
-    
-    if (strcmp(alphaDetectionBuffer, "_ret") == 0) {
-        tokenArray[tokenCount].datatype = _return;
-    } 
+extern char alphaDetectionBuffer[MAX_BUFFER_SIZE];
+extern char linearOneLineSize[0x400];
 
-    else if(strstr(alphaDetectionBuffer, "ret") != NULL) {
-        // tokenArray[tokenCount].datatype = variable;
-        fprintf(stderr, "\nstd:syntax:error::[TC%d/L%d]::[%s]:::[_ret]\n", tokenCount, lineNumber, alphaDetectionBuffer, "_ret");
-        tokenArray[tokenCount].datatype = variable;  // Still tokenize it as variable
-      } 
+extern int bufferIndex;
+extern int tokenCount;
+extern int lineNumber;
 
-    else {
-      int allDigits = 1;
-        for (int inc = 0; inc < bufferIndex; inc += 1) {
-          if (!isdigit(alphaDetectionBuffer[inc])) {
-            allDigits = 0;
-            break;
-          }  // why is this shit ending before the keyword LOL
-        }
-        
-      if (allDigits) {
-        tokenArray[tokenCount].datatype = intLiteral;
-      } else {
-        tokenArray[tokenCount].datatype = variable;                              // note to self: cannot rewrite [else if] statements after [else] is already written (wdift)
-      }
-    }
-    
-    strcpy(tokenArray[tokenCount].lexicalBuffer, alphaDetectionBuffer);          // copy finalized token to alphaBuffer for (a) finalized reading
-    tokenCount += 1;
+// funcs are externed by default
+void finalizeAlphaToken(void);
+void tokenize(char charFromTheFile);
+void printTokens(void);
+void resetTokenizer(void);
 
-    bufferIndex = 0;              
-    memset(alphaDetectionBuffer, 0, sizeof(alphaDetectionBuffer));               // reset the buffer back -- memset(where, how_much, sizeof());
-  }
-}
-
-void tokenize(char charFromTheFile) {
-  if (isspace(charFromTheFile)) {
-    finalizeAlphaToken();
-  }
-
-  else if (isalpha(charFromTheFile) || charFromTheFile == '_' || (bufferIndex > 0 && isalnum(charFromTheFile))) {
-    if (bufferIndex < MAX_BUFFER_SIZE - 1) {
-      alphaDetectionBuffer[bufferIndex] = charFromTheFile;
-      bufferIndex += 1;
-    }
-  }
-
-  /* ---------------------------------------------------------------- //
- 
-      else if (isalpha(charFromTheFile)) {
-        alphaDetectionBuffer[bufferIndex += 1] = charFromTheFile; 
-      }
-  // ---------------------------------------------------------------- */ 
-  
-  else if(isdigit(charFromTheFile)) {
-    alphaDetectionBuffer[bufferIndex] = charFromTheFile;
-    bufferIndex += 1;
-  }
-
-  // -----------------
-  /* OPERATORS HERE */
-  
-  // if its a semicolon ;
-  else if (charFromTheFile == ';' && tokenCount < MAX_TOKENS_USAGE) {
-    finalizeAlphaToken();
-    tokenArray[tokenCount].datatype = semicolon;
-    tokenArray[tokenCount].lexicalBuffer[0] = ';';
-    tokenArray[tokenCount].lexicalBuffer[1] = '\0';
-    tokenCount += 1;
-  }
-
-  // if its a plus operator +
-  else if (charFromTheFile == '+' && tokenCount < MAX_TOKENS_USAGE) {
-    finalizeAlphaToken();
-    tokenArray[tokenCount].datatype = plus;
-    tokenArray[tokenCount].lexicalBuffer[0] = '+';
-    tokenArray[tokenCount].lexicalBuffer[1] = '\0';
-    tokenCount += 1;
-  }
-  
-  // if its a minus operator - ?
-  else if (charFromTheFile == '-' && tokenCount < MAX_TOKENS_USAGE) {
-    finalizeAlphaToken();
-    tokenArray[tokenCount].datatype = minus;
-    tokenArray[tokenCount].lexicalBuffer[0] = '-';
-    tokenArray[tokenCount].lexicalBuffer[1] = '\0';
-    tokenCount += 1;
-  }
-  
-  // if its a multiplication operator *
-  else if (charFromTheFile == '*' && tokenCount < MAX_TOKENS_USAGE) {
-    finalizeAlphaToken();
-    tokenArray[tokenCount].datatype = multiply;
-    tokenArray[tokenCount].lexicalBuffer[0] = '*';
-    tokenArray[tokenCount].lexicalBuffer[1] = '\0';
-    tokenCount += 1;
-  }
-  
-  // if its a division operator /
-  else if (charFromTheFile == '/' && tokenCount < MAX_TOKENS_USAGE) {
-    finalizeAlphaToken();
-    tokenArray[tokenCount].datatype = divide;
-    tokenArray[tokenCount].lexicalBuffer[0] = '/';
-    tokenArray[tokenCount].lexicalBuffer[1] = '\0';
-    tokenCount += 1;
-  }
-  
-  // if its a modulo operator %
-  else if (charFromTheFile == '%' && tokenCount < MAX_TOKENS_USAGE) {
-    finalizeAlphaToken();
-    tokenArray[tokenCount].datatype = modulo;
-    tokenArray[tokenCount].lexicalBuffer[0] = '%';
-    tokenArray[tokenCount].lexicalBuffer[1] = '\0';
-    tokenCount += 1;
-  }
-  
-  // if its an assignment operator =
-  else if (charFromTheFile == '=' && tokenCount < MAX_TOKENS_USAGE) {
-    finalizeAlphaToken();
-    tokenArray[tokenCount].datatype = assignment;
-    tokenArray[tokenCount].lexicalBuffer[0] = '=';
-    tokenArray[tokenCount].lexicalBuffer[1] = '\0';
-    tokenCount += 1;
-  } // pretty repetitive but at least now its concrete
-}
-
-/* temporary parser confirmation */
-void printTokens(void) {
-  for (int inc = 0; inc < tokenCount; inc += 1) {
-    printf("token [%d]: type = [%d], value = [%s]\n", inc, tokenArray[inc].datatype, tokenArray[inc].lexicalBuffer);
-  }
-}
-
-// hell yeah
-void resetTokenizer(void) {
-  tokenCount = 0;
-  bufferIndex = 0;
-  lineNumber = 1;
-  memset(alphaDetectionBuffer, 0, sizeof(alphaDetectionBuffer));
-  memset(tokenArray, 0, sizeof(tokenArray));
-}
+#endif
