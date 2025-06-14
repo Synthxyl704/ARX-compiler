@@ -1,5 +1,5 @@
-#include "./tokenizer.h" // ./out basically
-#include "tokenizer.c"  
+#include "./arxtokenizer.h" // ./out basically
+#include "arxtokenizer.c"  
 
 int main(int argc, char **argv) {
   if (argc != 2) {
