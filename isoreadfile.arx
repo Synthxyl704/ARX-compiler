@@ -1,3 +1,5 @@
-int varX = 69;
-int varY = varX * 420;
-_ret 47;
+mv_int prov {
+    mv_flt myFloatCancer2 = 452.34;
+    mv_int MYEXPOVAR = 4E55;
+    retx6 69;
+}
