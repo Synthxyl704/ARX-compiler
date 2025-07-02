@@ -5,6 +5,15 @@ Started on 13th June, (at the time) 7 months into programming (in general) - a s
 ### IMP! [[ Project currently under construction, UPDs and rewrites will be updated frequently as needed to respective files.]]
 <hr>
 
+<details>
+<summary>How it will look on GitHub</summary>
+
+> **💡 Important**
+>
+> Project under condtruction
+
+</details>
+
 ## Run Locally
 
 Clone the project using this command onto bash:
