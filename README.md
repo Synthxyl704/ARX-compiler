@@ -22,11 +22,8 @@ git clone https://github.com/Synthxyl704/ARX-compiler
 -> gcc isomain.c -o isomain
 -> ./isomain ./isoreadfile.arx 
 ```
-
+# Syntax manual:
 ## Current language documentation for reference
-
-> [!NOTE]
-> More datatypes, parse tree/syntax trees, and byte allocations will be added soon.
 
 ### All existing datatypes:
 | Datatype | Syntax      |      
@@ -36,8 +33,15 @@ git clone https://github.com/Synthxyl704/ARX-compiler
 | Double       | mv_dbl  |
 | Character    | mv_chr  | 
 
+Trivia: `mv` means "moving" in ARX, that means when you type:
+```
+mv_int 1E5, varX;
+```
+You are telling ARX to "move this `int`/integer with `value=1E5/100000` into `varX` <br>
+Same for flt, chr, and dbl!
+
 ### Functions:
-In ARX, functions are conventionally known as "Subprograms"
+In ARX, functions are conventionally known as "subprograms"
 | Token | Syntax      |      
 |----------|--------     |
 | Function     | _subprog  | 
