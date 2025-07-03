@@ -16,7 +16,7 @@ Clone the project using this command onto bash:
 git clone https://github.com/Synthxyl704/ARX-compiler
 ```
 
-Linux terminal guide with neovim:
+[Linux] | Terminal guide:
 ```
 -> cd <directory of storage>
 -> gcc isomain.c -o isomain
