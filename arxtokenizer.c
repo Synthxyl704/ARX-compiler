@@ -1,5 +1,4 @@
 #include "arxtokenizer.h"
-#include <stdbool.h>
 
 token tokenArray[MAX_TOKENS_USAGE];
 
