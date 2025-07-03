@@ -4,7 +4,7 @@ Started on 13th June, (at the time) 7 months into programming (in general) - a s
 <hr>
 
 > [!NOTE]
-> Useful information that users should know, even when skimming content.
+> The compiler is still incomplete, has "sort of" bad code and you get lost in its vastness easily, UPDs, rewrites and refactorings of the code will be logged appropriately
 
 <hr>
 
@@ -62,12 +62,9 @@ ARX was/is simply created for enhancing my knowledge in compiler design and argu
 
 Because why not.
 
-## Epic learningx & tinkering history/remarks
+## UPD/RR logs:
 
-```
-#define MAX_TOKENS_USAGE 0x7F6E
-```
-This was actually completely random, 0x7F6E is 32622, a completely srand(); number.
+> N/A
 
 ```
 #define MAX_TOKENS_USAGE 0x7F6E
