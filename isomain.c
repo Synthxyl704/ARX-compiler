@@ -1,6 +1,5 @@
 #include "arxtokenizer.h" // ./out basically
 #include "arxtokenizer.c"  
-#include <stdbool.h>
  
 extern bool seenAnIntLit, seenADecimalPoint;
 
