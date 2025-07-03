@@ -25,6 +25,14 @@ git clone https://github.com/Synthxyl704/ARX-compiler
 
 ## Current language documentation for reference
 
+Datatypes:
+| Datatype | Syntax      |      
+|----------|--------     |
+| Integers     | mv_int  | 
+| Floats       | mv_flt  |
+| Double       | mv_dbl  |
+| Character    | mv_chr  | 
+
 - _ret - return
 - _prov - main
 - _subprogram - functions
