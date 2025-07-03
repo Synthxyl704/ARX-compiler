@@ -1,5 +1,6 @@
-mv_int prov {
-    mv_flt myFloatCancer2 = 452.34;
-    mv_int MYEXPOVAR = 4E55;
-    retx6 69;
+mv_int _prov {
+    mv_flt 69.33, var1;
+    mv_int 23E2, var2;
+
+    _ret 1;
 }
