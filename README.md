@@ -3,7 +3,8 @@ Started on 13th June, (at the time) 7 months into programming (in general) - a s
 
 <hr>
 
-> Project currently under construction, UPDs and rewrites will be updated frequently as needed to respective files.
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
 
 <hr>
 
