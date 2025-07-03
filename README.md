@@ -1,5 +1,6 @@
 # ARX compiler
-Started on 13th June, (at the time) 7 months into programming (in general) - a simple compiler for my language which I'm learning to make for pushing and increasing my skills in low level understanding and compiler design, completely open source and you can tweak it to your liking, make changes or learn if you want.
+Started on 13th June with mediocre C syntactical knowledge. <br>
+ARX is a 
 
 <hr>
 
