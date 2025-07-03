@@ -1,5 +1,5 @@
-#ifndef TOKENIZER_H
-#define TOKENIZER_H
+#ifndef ARXTOKENIZER_H
+#define ARXTOKENIZER_H
 
 #include <stdio.h>
 #include <stdlib.h>
