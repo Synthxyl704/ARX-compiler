@@ -4,7 +4,8 @@ Started on 13th June, (at the time) 7 months into programming (in general) - a s
 <hr>
 
 > [!NOTE]
-> The compiler is still incomplete, has "sort of" bad code and you get lost in its vastness easily, UPDs, rewrites and refactorings of the code will be logged appropriately
+> The compiler is still incomplete and has alot of issues in its current state.
+> UPDs, rewrites and refactorings of the code will be logged appropriately
 
 <hr>
 
