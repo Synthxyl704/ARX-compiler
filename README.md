@@ -25,7 +25,10 @@ git clone https://github.com/Synthxyl704/ARX-compiler
 
 ## Current language documentation for reference
 
-Datatypes:
+> [!NOTE]
+> More datatypes, parse tree/syntax trees, and byte allocations will be added soon.
+
+### All existing datatypes:
 | Datatype | Syntax      |      
 |----------|--------     |
 | Integers     | mv_int  | 
@@ -33,10 +36,17 @@ Datatypes:
 | Double       | mv_dbl  |
 | Character    | mv_chr  | 
 
-- _ret - return
-- _prov - main
-- _subprogram - functions
-- UC
+### Functions:
+In ARX, functions are conventionally known as "Subprograms"
+| Token | Syntax      |      
+|----------|--------     |
+| Function     | _subprog  | 
+
+### Main and return:
+| Token | Syntax      |      
+|----------|--------     |
+| Main     | _prov  | 
+| Return     | _ret | 
 
 ## ARX "not-so-friendly-but-works" print format for errors and stuff
 ```
