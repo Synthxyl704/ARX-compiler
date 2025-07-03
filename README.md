@@ -1,7 +1,6 @@
 # ARX compiler
 Started on 13th June with mediocre C syntactical knowledge. <br>
-ARX is a 
-
+ARX is a "derivative" language inspired from C, C++ and ASM. <br>
 <hr>
 
 > [!NOTE]
