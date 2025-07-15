@@ -1,11 +1,12 @@
 #include "arxtokenizer.h" // ./out basically
 #include "arxtokenizer.c"  
+#include <stdbool.h>
  
 extern bool seenAnIntLit, seenADecimalPoint;
 
 int main(int argc, char **argv) {
   if (argc != 2) {
-    fprintf(stderr, "std:fileinclusion_error::argv[1]=found_absent:::include_file\n");      // maybe better than puts/printf since its for my bash terminal
+      fprintf(stderr, "std:fileinclusion_error::argv[1]=found_absent:::include_file\n");      // maybe better than puts/printf since its for my bash terminal
     return EXIT_FAILURE;
   }
 
@@ -18,12 +19,14 @@ int main(int argc, char **argv) {
   char charFromFile;
   int charNumCounter = 0;
 
-  while ((charFromFile = fgetc(fileToRead)) != EOF) {          
+  while ((charFromFile = fgetc(fileToRead)) != EOF) {    
+
     tokenize(charFromFile);
     charNumCounter += 1;
     if (charFromFile == '\n') {                                // removed fgets(<code>); because it caused segfaults
-      lineNumber += 1; 
+      lineNumber += 1; // __LINE__
     } 
+
   }
 
   finalizeAlphaToken();
