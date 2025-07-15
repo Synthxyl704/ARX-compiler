@@ -1,5 +1,5 @@
-#ifndef ARXTOKENIZER_H
-#define ARXTOKENIZER_H
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -93,7 +93,7 @@ const char* tokenTypeToStr(enum tokenType d_type) {
     case _main:        return "_main";
     case _return:      return "_return";
     case _subprog:     return "_subprog";
-    default:           return "unknown";
+    default:           return "unknown_token";
   }
 }
 
