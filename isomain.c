@@ -10,23 +10,33 @@ int main(int argc, char **argv) {
     return EXIT_FAILURE;
   }
 
+  char *checkARX = argv[1];
+
+  if (strstr(checkARX, ".arx") == false) {
+    fprintf(stderr, "std::fileinclusionerror::invalid_arx_extension:::<file>.arx");
+    return EXIT_FAILURE;
+  }
+
   FILE *fileToRead = fopen(argv[1], "r");
   if (!fileToRead) {                                           // cool way to type fileToRead == NULL
     fprintf(stderr, "std:fileread_error::argv[1].filecontent=NULL:::writedataARX=true\n");
     return EXIT_FAILURE;
   }
 
+  // if (strcmp(argv[1], ".arx") != (false)) {
+  //   fprintf(stderr, "std::fileinclusionerror::invalid_arx_extension:::<file>.arx");
+  //   return EXIT_FAILURE;
+  // }
+
   char charFromFile;
   int charNumCounter = 0;
 
   while ((charFromFile = fgetc(fileToRead)) != EOF) {    
-
     tokenize(charFromFile);
     charNumCounter += 1;
     if (charFromFile == '\n') {                                // removed fgets(<code>); because it caused segfaults
-      lineNumber += 1; // __LINE__
+      lineNumber += 1; // use __LINE__ instead?
     } 
-
   }
 
   finalizeAlphaToken();
@@ -39,7 +49,7 @@ int main(int argc, char **argv) {
   // L[X]  = Line count (in file) at [X] position vertically
   // : = program standard (intrinsic to (the) program)
   // :: = file standard (may be intrinsic to both program + the file read)
-  // ::: = program standard amelioration tweak string
+  // ::: = program standard debugging tweak string
 
   fclose(fileToRead);
   return EXIT_SUCCESS;
