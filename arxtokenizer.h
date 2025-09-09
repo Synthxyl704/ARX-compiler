@@ -51,7 +51,7 @@ enum tokenType {
     _subprog,             // 24 [FUNCTION!] || function[parameters]
 };
 
-const char* tokenTypeToStr(enum tokenType d_type) {
+const char *tokenTypeToStr(enum tokenType d_type) {
     switch (d_type) {
         case intDatatype:    return "integer datatype";
         case floatDatatype:  return "floating point datatype";
