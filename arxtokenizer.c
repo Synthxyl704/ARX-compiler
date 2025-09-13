@@ -19,7 +19,6 @@ typedef struct {
     int lastErrorLine;
     int lastErrorColumn;
 } ErrorContext;
-
 // holy sigmastyle is that a kracc bacc reference!!1!1!!1
 
 static ErrorContext errorCtx = {0};
@@ -33,7 +32,6 @@ void reportSyntaxError(const char *found, const char *expected, const char *sugg
     errorCtx.lastErrorColumn = columnNumber;
 }
 
-// warning <
 void reportWarning(const char *token, const char *warning) {
     fprintf(stderr, "std:warning::[TC%d/L%d:C%d]::[%s]:::[%s]\n", 
             tokenCount, lineNumber, columnNumber, token, warning);
@@ -57,8 +55,8 @@ bool isValidScientificNotation(const char *buffer, int length) {
         
         if (buffer[inc] == '.') {
             dotCount += 1;
-            if (dotCount > 1) return false; // multiple dots
-            if (ePos != -1) return false;  // dot after E
+            if (dotCount > 1) { return false; } // multiple dots
+            if (ePos != -1) { return false; }  // dot after E
             continue;
         }
 
@@ -72,7 +70,6 @@ bool isValidScientificNotation(const char *buffer, int length) {
         }
     }
     
-    // validate E position and surrounding digits
     if (ePos == 0 || ePos == (length - 1)) { return false; } // E at start/end
     if (!hasDigitsBeforeE || (ePos != (-1) && !hasDigitsAfterE)) { return false; }
     
@@ -177,7 +174,6 @@ void finalizeAlphaToken() {
                     tokenArray[tokenCount].datatype = variable;
                 }
             } else { 
-                // enhanced: improved regular number validation
                 int8_t allDigitsOrSingleDot = 1;
                 int8_t hasSeenDecimalDot = 0;
                 bool startsWithDigit = isdigit(alphaDetectionBuffer[0]);
@@ -196,7 +192,6 @@ void finalizeAlphaToken() {
                     }
                 }
 
-                // enhanced: better literal classification
                 if (allDigitsOrSingleDot == 1 && hasSeenDecimalDot == 0 && startsWithDigit) {
                     tokenArray[tokenCount].datatype = intLiteral;
                 } else if (allDigitsOrSingleDot == 1 && hasSeenDecimalDot == 1 && startsWithDigit) {
@@ -206,7 +201,6 @@ void finalizeAlphaToken() {
                     }
                     tokenArray[tokenCount].datatype = floatingPointLiteral;
                 } else {
-                    // enhanced: validate variable names
                     if (startsWithDigit && !allDigitsOrSingleDot) {
                         reportSyntaxError(alphaDetectionBuffer, "valid identifier", "identifiers cannot start with digits");
                     }
@@ -224,7 +218,6 @@ void finalizeAlphaToken() {
 }
 
 void tokenize(char charFromTheFile) {
-    // enhanced: track column position
     if (charFromTheFile == '\n') {
         columnNumber = 1;
     } else {
@@ -239,7 +232,6 @@ void tokenize(char charFromTheFile) {
         return;
     }
     
-    // enhanced: better character classification
     if (isalpha(charFromTheFile) || charFromTheFile == '_' || (bufferIndex > 0 && isalnum(charFromTheFile))) {
         if (bufferIndex < MAX_BUFFER_SIZE - 1) {
             alphaDetectionBuffer[bufferIndex] = charFromTheFile;
@@ -417,7 +409,6 @@ void printTokens(void) {
     }
 }
 
-// enhanced: comprehensive reset with error context
 // void resetTokenizer(void) {
     // tokenCount = 0;
     // bufferIndex = 0;
@@ -428,7 +419,6 @@ void printTokens(void) {
     // memset(&errorCtx, 0, sizeof(ErrorContext));
 // }
 // 
-// enhanced: new function to get error statistics
 // int getErrorCount(void) {
     // return errorCtx.errorCount;
 // }
