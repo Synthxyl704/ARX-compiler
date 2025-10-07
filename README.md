@@ -1,5 +1,6 @@
 # ARX compiler
-ARX is a "derivative" language inspired from C, C++ and ASM. <br>
+
+ARX is a "derivative" statically typed language inspired from C, C++ and Assembly. <br> <br>
 Project started on 13th June with mediocre C syntactical knowledge, a fun project I started on for extending my knowledge in low level compiler design. <br>
 What makes it stand out than other compilers? | Currently nothing of significance :(
 <hr>
