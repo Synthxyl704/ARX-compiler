@@ -57,11 +57,11 @@ In ARX, functions are conventionally known as "subprograms"
 ```
 // example: std:syntax:error::[TC3/L1]::[retx6]:::[_ret]
 ```
-TC[X] = TokenCount (in file) at [X] position horizontally wrt L[X]
-L[X]  = Line count (in file) at [X] position vertically
-: = program standard (intrinsic to (the) program)
-:: = file standard (may be intrinsic to both program + the file read)
-::: = program standard amelioration tweak string
+TC[X] = TokenCount (in file) at [X] position horizontally wrt L[X] <br>
+L[X]  = Line count (in file) at [X] position vertically <br>
+: = program standard (intrinsic to (the) program) <br>
+:: = file standard (may be intrinsic to both program + the file read) <br>
+::: = program standard amelioration tweak string <br>
 
 
 ## Learning material for compiler designs
