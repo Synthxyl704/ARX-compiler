@@ -83,7 +83,7 @@ bool isValidScientificNotation(const char *buffer, int length) {
 
         if (c == '+' || c == '-') {
             if (ePos == -1 || inx != ePos + 1) { return false; }
-            if (exponentSignSeen) { return false; } // not int
+            if (exponentSignSeen) { return false; } // not found, but that does not make it invalid
             exponentSignSeen = true;
             continue;
         }
