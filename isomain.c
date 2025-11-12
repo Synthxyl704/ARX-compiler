@@ -1,55 +1,39 @@
-#include "arxtokenizer.h" // ./out basically
-#include "arxtokenizer.c"  
+#include "arxtokenizer.h"
+// #include "arxparser.h"
+
 #include <stdbool.h>
- 
-extern bool seenAnIntLit, seenADecimalPoint;
 
 int main(int argc, char **argv) {
   if (argc != 2) {
-      fprintf(stderr, "std:fileinclusion_error::argv[1]=found_absent:::include_file\n");      // maybe better than puts/printf since its for my bash terminal
+      fprintf(stderr, "std:fileinclusion_error::argv[1]=found_absent:::include_file\n");
     return EXIT_FAILURE;
   }
 
-  char *checkARX = argv[1];
+  char (*checkARX_argv1) = argv[1];
 
-  if (strstr(checkARX, ".arx") == false) {
-    fprintf(stderr, "std::fileinclusionerror::invalid_arx_extension:::<file>.arx");
-    return EXIT_FAILURE;
+  size_t len = strlen(checkARX_argv1);
+  if (len < 4 || strcmp(checkARX_argv1 + len - 4, ".arx") != 0) {
+      fprintf(stderr, "std::file_Inclusion_Error::invalid_arx_extension:::<file>.arx\n");
+      return EXIT_FAILURE;
   }
 
   FILE *fileToRead = fopen(argv[1], "r");
-  if (!fileToRead) {                                           // cool way to type fileToRead == NULL
+  if (!fileToRead || fileToRead == NULL) {
     fprintf(stderr, "std:fileread_error::argv[1].filecontent=NULL:::writedataARX=true\n");
     return EXIT_FAILURE;
   }
 
-  // if (strcmp(argv[1], ".arx") != (false)) {
-  //   fprintf(stderr, "std::fileinclusionerror::invalid_arx_extension:::<file>.arx");
-  //   return EXIT_FAILURE;
-  // }
-
-  char charFromFile;
-  int charNumCounter = 0;
-
-  while ((charFromFile = fgetc(fileToRead)) != EOF) {    
-    tokenize(charFromFile);
-    charNumCounter += 1;
-    if (charFromFile == '\n') {                                // removed fgets(<code>); because it caused segfaults
-      lineNumber += 1; // use __LINE__ instead?
-    } 
+  char lineBuffer[1024];
+  while (fgets(lineBuffer, sizeof(lineBuffer), fileToRead)) {
+      for (char (*p) = lineBuffer; (*p) != '\0'; p += 1) {
+          tokenize(*p);
+      }
   }
 
   finalizeAlphaToken();
 
   /* temporary lexer/tokenizer/parser confirmation */
   printTokens();
-
-  // example: std:syntax:error::[TC3/L1]::[retx6]:::[_ret]
-  // TC[X] = TokenCount (in file) at [X] position horizontally wrt L[X]
-  // L[X]  = Line count (in file) at [X] position vertically
-  // : = program standard (intrinsic to (the) program)
-  // :: = file standard (may be intrinsic to both program + the file read)
-  // ::: = program standard debugging tweak string
 
   fclose(fileToRead);
   return EXIT_SUCCESS;
