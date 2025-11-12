@@ -326,28 +326,31 @@ void tokenize(char charFromTheFile) {
         case '/': case '%': case '=': case '(': case ')':
         case '{': case '}': case '[': case ']': {
             finalizeAlphaToken();
-            enum tokenType t = (
-                        charFromTheFile == ',' ? comma :
-                        charFromTheFile == ';' ? semicolon :
-                        charFromTheFile == '+' ? plus :
-                        charFromTheFile == '-' ? minus :
-                        charFromTheFile == '*' ? multiply :
-                        charFromTheFile == '/' ? divide :
-                        charFromTheFile == '%' ? modulo :
-                        charFromTheFile == '=' ? assignment :
-                        charFromTheFile == '(' ? LHcircleBracket :
-                        charFromTheFile == ')' ? RHcircleBracket :
-                        charFromTheFile == '{' ? LHcurlyBracket :
-                        charFromTheFile == '}' ? RHcurlyBracket :
-                        charFromTheFile == '[' ? LHsquareBracket : RHsquareBracket
+
+            // this is absolute cinema
+            enum tokenType tex = (
+                charFromTheFile == ',' ? comma :
+                charFromTheFile == ';' ? semicolon :
+                charFromTheFile == '+' ? plus :
+                charFromTheFile == '-' ? minus :
+                charFromTheFile == '*' ? multiply :
+                charFromTheFile == '/' ? divide :
+                charFromTheFile == '%' ? modulo :
+                charFromTheFile == '=' ? assignment :
+                charFromTheFile == '(' ? LHcircleBracket :
+                charFromTheFile == ')' ? RHcircleBracket :
+                charFromTheFile == '{' ? LHcurlyBracket :
+                charFromTheFile == '}' ? RHcurlyBracket :
+                charFromTheFile == '[' ? LHsquareBracket : RHsquareBracket
             );
 
-            tokenArray[tokenCount].datatype = t;
+            tokenArray[tokenCount].datatype = tex;
             tokenArray[tokenCount].lexicalBuffer[0] = charFromTheFile;
             tokenArray[tokenCount].lexicalBuffer[1] = '\0';
             tokenCount += 1;
             break;
         }
+
         default:
             finalizeAlphaToken();
             reportWarning(&charFromTheFile, "unknown character ignored");
